@@ -1,0 +1,6 @@
+{
+  "app_name": "frontendTemplate",
+  "dest": "public",
+  "src": "src",
+  "tmp": ".tmp"
+}

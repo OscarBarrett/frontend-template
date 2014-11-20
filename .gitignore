@@ -1,0 +1,6 @@
+.sass-cache
+.tmp
+dest
+node_modules
+public
+src/bower_components
