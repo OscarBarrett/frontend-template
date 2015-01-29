@@ -15,6 +15,5 @@ gulp.task 'wiredep', ->
   gulp.src 'src/*.html'
     .pipe wiredep(
       directory: 'src/bower_components'
-      exclude: ['foundation']
     )
     .pipe gulp.dest('src')

@@ -26,6 +26,6 @@ gulp.task 'build-staging', ['clean'], ->
   gulp.start 'html_staging', 'default_tasks'
 
 gulp.task 'default_tasks', ->
-  gulp.start 'test', 'images', 'fonts'
+  gulp.start 'images', 'fonts', 'htaccess'
 
 gulp.task 'init', ['clean', 'clear_cache']

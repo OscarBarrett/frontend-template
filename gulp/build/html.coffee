@@ -18,7 +18,7 @@ gulp.task 'html', ['styles', 'scripts', 'partials'], ->
   gulp.src "#{config.src}/*.html"
     # Inject partials into the template
     .pipe $.inject(
-      gulp.src("#{config.tmp}/{app,components}/**/*.js", read: false), {
+      gulp.src("#{config.tmp}/{app/partials,components}/**/*.js", read: false), {
         starttag: '<!-- inject:partials -->'
         addRootSlash: false
         addPrefix: '../'
