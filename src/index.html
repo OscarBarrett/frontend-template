@@ -2,20 +2,22 @@
 <html class="no-js" ng-app="frontendTemplate">
   <head>
     <meta charset="utf-8">
-    <title>frontend</title>
+    <title ng-bind="$state.current.data.pageTitle + ' | ' + siteName"></title>
+    <base href="/">
+
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
     <!-- build:css({.tmp,src}) styles/vendor.css -->
-    <link rel="stylesheet" href="app/main/vendor.css">
+    <!-- <link rel="stylesheet" href="app/styles/vendor.css"> -->
 
     <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:css({.tmp,src}) styles/main.css -->
-    <link rel="stylesheet" href="app/main/main.css">
+    <link rel="stylesheet" href="app/styles/common.css">
     <!-- endbuild -->
 
     <!-- build:js scripts/modernizr.js -->
@@ -23,21 +25,16 @@
     <!-- endbuild -->
   </head>
   <body>
-    <!--[if lt IE 10]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
 
-    <div ui-view></div>
+    <div id="header-component" ng-include="'components/header/header.html'"></div>
 
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-    <script>
-      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-      e.src='//www.google-analytics.com/analytics.js';
-      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-      ga('create','UA-XXXXX-X');ga('send','pageview');
-    </script>
+    <div id="content">
+      <div id="partial" ui-view="content"></div>
+    </div>
+
+    <div id="footer-component" ng-include="'components/footer/footer.html'"></div>
+
+    <div ga></div>
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
@@ -49,16 +46,15 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="bower_components/fastclick/lib/fastclick.js"></script>
-    <script src="bower_components/jquery.cookie/jquery.cookie.js"></script>
-    <script src="bower_components/jquery-placeholder/jquery.placeholder.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
+    <!-- build:js({src,.tmp}) scripts/common.js -->
+    <script src="app/scripts/common/routing_service.js"></script>
+
     <!-- build:js({src,.tmp}) scripts/main.js -->
     <script src="app/app.js"></script>
-    <script src="app/main/main.controller.js"></script>
-    <script src="components/navbar/navbar.controller.js"></script>
 
     <!-- inject:partials -->
     <!-- angular templates will be automaticaly converted in js and inserted here -->
