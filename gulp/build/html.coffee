@@ -15,7 +15,7 @@ gulp.task 'html', ['styles', 'scripts', 'partials'], ->
   cssFilter   = $.filter('**/*.css')
   assets      = undefined
 
-  gulp.src "#{config.src}/*.html"
+  gulp.src "#{config.src}/index.html"
     # Inject partials into the template
     .pipe $.inject(
       gulp.src("#{config.tmp}/{app/partials,components}/**/*.js", read: false), {

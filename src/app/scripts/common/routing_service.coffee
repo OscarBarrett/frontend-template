@@ -14,7 +14,8 @@ angular.module 'routingService', ['ui.router']
       $stateProvider
         .state state,
           url: params.url
-          templateUrl: "app/partials/#{state}.html"
+          views:
+            content: { templateUrl: "app/states/#{state}/#{state}.html" }
           controller: controller
           data: data
           resolve:
