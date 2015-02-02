@@ -9,14 +9,14 @@ bowerrc = build.bowerrc
 uglifySaveLicense = require 'uglify-save-license'
 
 ### HTML compilation ###
-gulp.task 'html', ['styles', 'scripts', 'partials'], ->
+gulp.task 'html', ['wiredep', 'styles', 'scripts', 'partials'], ->
   # Filters. Allows us to work on a subset of the original files.
   htmlFilter  = $.filter('*.html')
   jsFilter    = $.filter('**/*.js')
   cssFilter   = $.filter('**/*.css')
   assets      = undefined
 
-  gulp.src "#{config.src}/index.html"
+  gulp.src "#{config.tmp}/index.html"
     # Inject partials into the template
     .pipe $.inject(
       gulp.src("#{config.tmp}/{app/states,components}/**/*.js", read: false),
@@ -61,10 +61,11 @@ gulp.task 'html', ['styles', 'scripts', 'partials'], ->
     .pipe $.size()
 
 
-### HTML compliation for staging (no minification or file revisions) ###
-gulp.task 'html_staging', ['styles_staging', 'scripts_staging', 'partials_staging'], ->
 
-  gulp.src "#{config.src}/index.html"
+### HTML compliation for staging (no minification or file revisions) ###
+gulp.task 'html_staging', ['wiredep', 'styles_staging', 'scripts_staging', 'partials_staging'], ->
+
+  gulp.src "#{config.tmp}/index.html"
     # Inject partials into the template
     .pipe $.inject(
       gulp.src("#{config.dest}/{app,components}/**/*.js", read: false, relative: true), {
@@ -81,7 +82,7 @@ gulp.task 'html_staging', ['styles_staging', 'scripts_staging', 'partials_stagin
 
 
 
-gulp.task 'states', ->
+gulp.task 'states', ['styles'], ->
 
   gulp.src "#{config.src}/index.html"
     .pipe $.inject(

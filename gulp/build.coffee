@@ -16,7 +16,7 @@ exports.$ = require('gulp-load-plugins')(
   pattern: ['gulp-*']
 )
 
-exports.bowerrc = fs.readFileSync '.bowerrc', 'utf8'
+exports.bowerrc = JSON.parse fs.readFileSync('.bowerrc', 'utf8')
 
 require('require-dir')('./build') # Load build tasks
 
@@ -28,6 +28,6 @@ gulp.task 'build-staging', ['clean'], ->
   gulp.start 'html_staging', 'default_tasks'
 
 gulp.task 'default_tasks', ->
-  gulp.start 'images', 'fonts', 'htaccess', 'states'
+  gulp.start 'images', 'fonts', 'htaccess'
 
 gulp.task 'init', ['clean', 'clear_cache']

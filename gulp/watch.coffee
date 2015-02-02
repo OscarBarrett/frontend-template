@@ -2,9 +2,8 @@
 
 gulp = require 'gulp'
 
-gulp.task 'watch', ['wiredep', 'styles'], ->
-  gulp.watch 'src/index.html', ['states']
+gulp.task 'watch', ['states', 'wiredep', 'styles', 'scripts'], ->
+  gulp.watch 'src/index.html', ['states', 'wiredep']
   gulp.watch 'src/{app,components}/**/*.scss', ['styles']
   gulp.watch 'src/{app,components}/**/*.coffee', ['scripts']
-  gulp.watch 'src/assets/images/**/*', ['images']
   gulp.watch 'bower.json', ['wiredep']
