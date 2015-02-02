@@ -1,6 +1,8 @@
 'use strict'
 
-gulp = require 'gulp'
+gulp    = require 'gulp'
+build   = require './build.coffee'
+bowerrc = build.bowerrc
 
 # inject bower components
 gulp.task 'wiredep', ->
@@ -8,12 +10,12 @@ gulp.task 'wiredep', ->
 
   gulp.src 'src/{app,components}/*.scss'
     .pipe wiredep(
-      directory: 'src/bower_components'
+      directory: bowerrc.directory
     )
     .pipe gulp.dest('src')
 
-  gulp.src 'src/*.html'
+  gulp.src 'src/index.html'
     .pipe wiredep(
-      directory: 'src/bower_components'
+      directory: bowerrc.directory
     )
     .pipe gulp.dest('src')

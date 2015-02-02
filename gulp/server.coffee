@@ -13,17 +13,19 @@ browserSyncInit = (baseDir, files, browser) ->
     server:
       baseDir: baseDir
       middleware: middleware
+      routes:
+        '/bower_components': 'bower_components'
     browser: browser
   )
 
-gulp.task 'serve', ['scripts', 'watch'], ->
+gulp.task 'serve', ['states', 'scripts', 'watch'], ->
   browserSyncInit([
-    'src'
     '.tmp'
+    'src'
   ], [
+    '.tmp/index.html'
     '.tmp/{app,components}/**/*.css'
     'src/assets/images/**/*'
-    'src/*.html'
     'src/{app,components}/**/*.html'
     'src/{app,components}/**/*.js'
   ])

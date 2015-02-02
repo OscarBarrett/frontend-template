@@ -4,6 +4,7 @@ gulp    = require 'gulp'
 build   = require '../build.coffee'
 config  = build.config
 $       = build.$
+bowerrc = build.bowerrc
 
 uglifySaveLicense = require 'uglify-save-license'
 
@@ -18,7 +19,8 @@ gulp.task 'html', ['styles', 'scripts', 'partials'], ->
   gulp.src "#{config.src}/index.html"
     # Inject partials into the template
     .pipe $.inject(
-      gulp.src("#{config.tmp}/{app/partials,components}/**/*.js", read: false), {
+      gulp.src("#{config.tmp}/{app/states,components}/**/*.js", read: false),
+      {
         starttag: '<!-- inject:partials -->'
         addRootSlash: false
         addPrefix: '../'
@@ -60,8 +62,9 @@ gulp.task 'html', ['styles', 'scripts', 'partials'], ->
 
 
 ### HTML compliation for staging (no minification or file revisions) ###
-gulp.task 'html_staging', ['styles_staging', 'scripts_staging', 'partials_staging', 'load_bowerrc'], ->
-  gulp.src "#{config.src}/*.html"
+gulp.task 'html_staging', ['styles_staging', 'scripts_staging', 'partials_staging'], ->
+
+  gulp.src "#{config.src}/index.html"
     # Inject partials into the template
     .pipe $.inject(
       gulp.src("#{config.dest}/{app,components}/**/*.js", read: false, relative: true), {
@@ -77,8 +80,16 @@ gulp.task 'html_staging', ['styles_staging', 'scripts_staging', 'partials_stagin
     .pipe $.size()
 
 
-bowerrc = undefined
-gulp.task 'load_bowerrc', ->
-  fs = require 'fs'
-  fs.readFile '.bowerrc', 'utf8', (err, data) ->
-    bowerrc = JSON.parse data
+
+gulp.task 'states', ->
+
+  gulp.src "#{config.src}/index.html"
+    .pipe $.inject(
+      gulp.src("#{config.tmp}/app/states/**/*.css", read: false, relative: true),
+      {
+        starttag: '<!-- inject:statecss -->'
+        ignorePath: config.tmp
+      }
+    )
+    .pipe gulp.dest(config.tmp)
+    .pipe $.size()

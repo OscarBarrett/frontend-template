@@ -1,6 +1,6 @@
 angular.module 'frontendTemplate', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'routingService']
   .config (routingServiceProvider) ->
-    routingServiceProvider.addState 'main',
+    routingServiceProvider.addState 'home',
       url: '/'
 
     routingServiceProvider.addState 'test',
@@ -11,5 +11,6 @@ angular.module 'frontendTemplate', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSani
   .run ($rootScope) ->
     $rootScope.siteName = 'Frontend Template'
 
-    $rootScope.$on '$stateChangeStart', (event, toState, toParams, fromState, fromParams) ->
-      console.log event
+    $rootScope.$on '$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) ->
+      # Ensure currentState is updated and available to views
+      $rootScope.currentState = toState

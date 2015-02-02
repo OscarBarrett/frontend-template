@@ -2,29 +2,28 @@
 <html class="no-js" ng-app="frontendTemplate">
   <head>
     <meta charset="utf-8">
-    <title ng-bind="$state.current.data.pageTitle + ' | ' + siteName"></title>
+    <title ng-bind="currentState.pageTitle + ' | ' + siteName"></title>
     <base href="/">
 
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
 
     <!-- build:css({.tmp,src}) styles/vendor.css -->
-    <!-- <link rel="stylesheet" href="app/styles/vendor.css"> -->
+      <!-- <link rel="stylesheet" href="app/styles/vendor.css"> -->
 
-    <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <!-- endbower -->
+      <!-- bower:css -->
+      <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" />
+      <!-- endbower -->
     <!-- endbuild -->
 
-    <!-- build:css({.tmp,src}) styles/main.css -->
-    <link rel="stylesheet" href="app/styles/common.css">
-    <!-- endbuild -->
+    <!-- build:css({.tmp,src}) styles/application.css -->
+      <link rel="stylesheet" href="app/styles/common.css">
 
-    <!-- build:js scripts/modernizr.js -->
-    <script src="bower_components/modernizr/modernizr.js"></script>
+      <!-- inject:statecss -->
+      <!-- endinject -->
     <!-- endbuild -->
   </head>
-  <body>
+  <body class="{{currentState.name}}">
 
     <div id="header-component" ng-include="'components/header/header.html'"></div>
 
@@ -37,28 +36,29 @@
     <div ga></div>
 
     <!-- build:js scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="bower_components/angular-touch/angular-touch.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <!-- endbower -->
+      <!-- bower:js -->
+      <script src="../bower_components/jquery/dist/jquery.js"></script>
+      <script src="../bower_components/modernizr/modernizr.js"></script>
+      <script src="../bower_components/angular/angular.js"></script>
+      <script src="../bower_components/angular-animate/angular-animate.js"></script>
+      <script src="../bower_components/angular-cookies/angular-cookies.js"></script>
+      <script src="../bower_components/angular-touch/angular-touch.js"></script>
+      <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+      <script src="../bower_components/angular-resource/angular-resource.js"></script>
+      <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+      <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+      <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:js({src,.tmp}) scripts/common.js -->
-    <script src="app/scripts/common/routing_service.js"></script>
+      <script src="app/scripts/common/routing_service.js"></script>
+    <!-- endbuild -->
 
-    <!-- build:js({src,.tmp}) scripts/main.js -->
-    <script src="app/app.js"></script>
+    <!-- build:js({src,.tmp}) scripts/application.js -->
+      <script src="app/app.js"></script>
 
-    <!-- inject:partials -->
-    <!-- angular templates will be automaticaly converted in js and inserted here -->
-    <!-- endinject -->
+      <!-- inject:partials -->
+      <!-- endinject -->
     <!-- endbuild -->
 
   </body>

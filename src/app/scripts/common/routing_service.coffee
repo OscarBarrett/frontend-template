@@ -10,18 +10,18 @@ angular.module 'routingService', ['ui.router']
 
       controller = params.controller || ''
       data = params.data || {}
+      
+      pageTitle = params.pageTitle || state
+      pageTitle = pageTitle.charAt(0).toUpperCase() + pageTitle.slice(1)
 
       $stateProvider
         .state state,
+          pageTitle: pageTitle
           url: params.url
           views:
             content: { templateUrl: "app/states/#{state}/#{state}.html" }
           controller: controller
           data: data
-          resolve:
-            style: ->
-              angular.element('head #partial-style').remove('')
-              angular.element('head').append('<link id="partial-style" rel="stylesheet" href="app/styles/' + state + '.css">')
 
     this.$get = ->
       (state, params) ->
