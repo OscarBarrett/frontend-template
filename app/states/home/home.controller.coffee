@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'frontendTemplate'
-  .controller 'MainCtrl', ($scope) ->
+  .controller 'HomeCtrl', ($scope) ->
     $scope.awesomeThings = [
       {
         key: "angular"

@@ -3,31 +3,44 @@
 gulp    = require 'gulp'
 build   = require '../build.coffee'
 bowerrc = build.bowerrc
-config  = build.config
 $       = build.$
 
-gulp.task 'compile.inject.all', ['compile.inject.bower','compile.inject.statecss']
+gulp.task 'compile.inject.all', ['compile.inject.bower','compile.inject.partialcss','compile.inject.partialjs']
 
 gulp.task 'compile.inject.bower', ['compile.move.all'], ->
   wiredep = require('wiredep').stream
 
-  gulp.src "#{config.tmp}/index.html"
+  gulp.src "#{GLOBAL.config.tmp}/index.html"
     .pipe wiredep(
       directory: bowerrc.directory
     )
-    .pipe gulp.dest(config.tmp)
+    .pipe gulp.dest(GLOBAL.config.tmp)
     .pipe $.size()
 
 
-gulp.task 'compile.inject.statecss', ['compile.move.all', 'compile.inject.bower'], ->
+gulp.task 'compile.inject.partialcss', ['compile.inject.bower'], ->
 
-  gulp.src "#{config.tmp}/index.html"
+  gulp.src "#{GLOBAL.config.tmp}/index.html"
     .pipe $.inject(
-      gulp.src("#{config.tmp}/states/**/*.css", read: false, relative: true),
+      gulp.src("#{GLOBAL.config.tmp}/{states,components}/**/*.css", read: false, relative: true),
       {
-        starttag: '<!-- inject:statecss -->'
-        ignorePath: config.tmp
+        starttag: '<!-- inject:partialcss -->'
+        ignorePath: GLOBAL.config.tmp
       }
     )
-    .pipe gulp.dest(config.tmp)
+    .pipe gulp.dest(GLOBAL.config.tmp)
+    .pipe $.size()
+
+gulp.task 'compile.inject.partialjs', ['compile.inject.partialcss'], ->
+
+  # Inject any component or state js into index
+  gulp.src "#{GLOBAL.config.tmp}/index.html"
+    .pipe $.inject(
+      gulp.src("#{GLOBAL.config.tmp}/{states,components}/**/*.js", read: false, relative: true),
+      {
+        starttag: '<!-- inject:partialjs -->'
+        ignorePath: GLOBAL.config.tmp
+      }
+    )
+    .pipe gulp.dest(GLOBAL.config.tmp)
     .pipe $.size()

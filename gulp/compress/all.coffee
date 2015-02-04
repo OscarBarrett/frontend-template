@@ -3,40 +3,38 @@
 gulp              = require 'gulp'
 build             = require '../build.coffee'
 uglifySaveLicense = require 'uglify-save-license'
+bowerrc           = build.bowerrc
+$                 = build.$
 
-bowerrc = build.bowerrc
-config  = build.config
-$       = build.$
-
-gulp.task 'compress.all', ['compress.index', 'compress.images', 'compress.convertpartials']
+gulp.task 'compress.all', ['compress.convertpartials', 'compress.injectpartials', 'compress.index', 'compress.images']
 
 gulp.task 'compress.convertpartials', ->
 
   # Compress the partials
-  gulp.src "#{config.tmp}/{components,states}/**/*.html"
+  gulp.src "#{GLOBAL.config.tmp}/{components,states}/**/*.html"
     .pipe $.minifyHtml(           # Minify
       empty: true
       spare: true
       quotes: true
     )
     .pipe $.ngHtml2js(            # Convert partials to js, storing them in $templateCache
-      moduleName: config.app_name
+      moduleName: GLOBAL.config.app_name
     )
-    .pipe gulp.dest(config.tmp)
+    .pipe gulp.dest("#{GLOBAL.config.tmp}/partials")
     .pipe $.size()
 
 gulp.task 'compress.injectpartials', ['compress.convertpartials'], ->
 
   # Inject the compressed partials into index
-  gulp.src "#{config.tmp}/index.html"
+  gulp.src "#{GLOBAL.config.tmp}/index.html"
     .pipe $.inject(
-      gulp.src("#{config.tmp}/{states,components}/**/*.js", read: false, relative: true),
+      gulp.src("#{GLOBAL.config.tmp}/partials/**/*.js", read: false, relative: true),
       {
-        starttag: '<!-- inject:partials -->'
-        ignorePath: config.tmp
+        starttag: '<!-- inject:partialhtml -->'
+        ignorePath: GLOBAL.config.tmp
       }
     )
-    .pipe gulp.dest(config.tmp)
+    .pipe gulp.dest(GLOBAL.config.tmp)
     .pipe $.size()
 
 gulp.task 'compress.index', ['compress.injectpartials'], ->
@@ -46,7 +44,7 @@ gulp.task 'compress.index', ['compress.injectpartials'], ->
   cssFilter   = $.filter('**/*.css')
   assets      = undefined
 
-  gulp.src "#{config.tmp}/index.html"
+  gulp.src "#{GLOBAL.config.tmp}/index.html"
 
     # Assets filter
     .pipe(assets = $.useref.assets())
@@ -78,15 +76,15 @@ gulp.task 'compress.index', ['compress.injectpartials'], ->
     )
     .pipe htmlFilter.restore()
 
-    .pipe gulp.dest(config.tmp)
+    .pipe gulp.dest(GLOBAL.config.tmp)
     .pipe $.size()
 
 gulp.task 'compress.images', ->
-  gulp.src "#{config.tmp}/images/*"
+  gulp.src "#{GLOBAL.config.tmp}/assets/images/*"
     .pipe $.cache($.imagemin                  # Minify images. Note: this is cached!
       optimizationLevel: 3                    # If you move directories, you may need to clear the cache (`gulp init`)
       progressive: true
       interlaced: true
     )
-    .pipe gulp.dest("#{config.tmp}/assets/images") # Save to final destination
+    .pipe gulp.dest("#{GLOBAL.config.tmp}/assets/images") # Save to final destination
     .pipe $.size()

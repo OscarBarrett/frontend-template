@@ -2,5 +2,7 @@
   "app_name": "frontendTemplate",
   "dest": "public",
   "src": "app",
-  "tmp": "tmp/compiled"
+  "tmp": "tmp/compiled",
+  "assetpath": "/assets",
+  "apiurl": "http://api.com"
 }

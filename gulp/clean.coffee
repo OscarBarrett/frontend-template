@@ -2,7 +2,6 @@
 
 gulp    = require 'gulp'
 build   = require './build.coffee'
-config  = build.config
 $       = build.$
 
 del     = require 'del'
@@ -11,8 +10,8 @@ del     = require 'del'
 gulp.task 'clean', ['clear_cache'], (cwd) ->
   # Delete the temporary and destination directories
   del [
-    config.tmp
-    config.dest
+    GLOBAL.config.tmp
+    GLOBAL.config.dest
   ], cwd
 
 

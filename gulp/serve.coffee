@@ -1,9 +1,9 @@
 'use strict'
 
 gulp        = require 'gulp'
+runSequence = require('run-sequence').use(gulp)
 browserSync = require 'browser-sync'
 middleware  = require './run/proxy'
-config      = require '../config.json'
 
 browserSyncInit = (baseDir, files, browser) ->
   if !browser? then browser = 'default'
@@ -18,15 +18,17 @@ browserSyncInit = (baseDir, files, browser) ->
     browser: browser
   )
 
-gulp.task 'serve', ['compile.move.all', 'compile.interpret.all', 'compile.inject.all', 'watch'], ->
-  browserSyncInit([
-    config.tmp
-  ], [
-    "#{config.tmp}/**/*"
-  ])
+gulp.task 'serve', ->
+  GLOBAL.setBuildEnv 'development'
+  runSequence 'clean', 'compile.all', 'run', 'watch'
 
-gulp.task 'watch', ['compile.move.all', 'compile.interpret.all', 'compile.inject.all'], ->
-  gulp.watch 'app/index.html',                   ['compile.move.all', 'compile.interpret.all', 'compile.inject.all']
-  gulp.watch 'app/{app,components}/**/*.scss',   ['compile.move.all', 'compile.interpret.all', 'compile.inject.all']
-  gulp.watch 'app/{app,components}/**/*.coffee', ['compile.move.all', 'compile.interpret.all', 'compile.inject.all']
-  gulp.watch 'bower.json',                       ['compile.move.all', 'compile.interpret.all', 'compile.inject.all']
+gulp.task 'watch', ->
+  gulp.watch 'app/**/*.*', ['compile.move.all', 'compile.interpret.all', 'compile.inject.all']
+  gulp.watch 'bower.json', ['compile.move.all', 'compile.interpret.all', 'compile.inject.all']
+
+gulp.task 'run', ->
+  browserSyncInit [
+    GLOBAL.config.tmp
+  ], [
+    "#{GLOBAL.config.tmp}/**/*"
+  ]
