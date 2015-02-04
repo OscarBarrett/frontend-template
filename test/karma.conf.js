@@ -6,10 +6,10 @@ module.exports = function(config) {
     basePath : '..', //!\\ Ignored through gulp-karma //!\\
 
     files : [ //!\\ Ignored through gulp-karma //!\\
-        'src/bower_components/angular/angular.js',
-        'src/bower_components/angular/angular-route.js',
-        'src/bower_components/angular-mocks/angular-mocks.js',
-        'src/{app,components}/** /*.js',
+        'vendor/bower_components/angular/angular.js',
+        'vendor/bower_components/angular/angular-route.js',
+        'vendor/bower_components/angular-mocks/angular-mocks.js',
+        'app/** /*.js',
         'test/unit/** /*.js'
     ],
 

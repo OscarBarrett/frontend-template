@@ -1,7 +1,8 @@
 'use strict'
 
-gulp = require 'gulp'
-fs = require 'fs'
+gulp        = require 'gulp'
+fs          = require 'fs'
+runSequence = require('run-sequence').use(gulp)
 
 ### Exports ###
 exports.handleError = (err) ->
@@ -18,16 +19,15 @@ exports.$ = require('gulp-load-plugins')(
 
 exports.bowerrc = JSON.parse fs.readFileSync('.bowerrc', 'utf8')
 
-require('require-dir')('./build') # Load build tasks
+require('require-dir')('./compile')
+require('require-dir')('./compress')
+require('require-dir')('./publish')
 
 ### Tasks ###
-gulp.task 'build', ['clean'], ->
-  gulp.start 'html', 'default_tasks'
+gulp.task 'build', ->
+  runSequence 'clean', 'compile.all', 'compress.all', 'publish.production'
 
-gulp.task 'build-staging', ['clean'], ->
-  gulp.start 'html_staging', 'default_tasks'
-
-gulp.task 'default_tasks', ->
-  gulp.start 'images', 'fonts', 'htaccess'
+gulp.task 'build-staging', ->
+  runSequence 'clean', 'compile.all', 'publish.staging'
 
 gulp.task 'init', ['clean', 'clear_cache']

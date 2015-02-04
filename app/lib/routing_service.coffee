@@ -10,7 +10,7 @@ angular.module 'routingService', ['ui.router']
 
       controller = params.controller || ''
       data = params.data || {}
-      
+
       pageTitle = params.pageTitle || state
       pageTitle = pageTitle.charAt(0).toUpperCase() + pageTitle.slice(1)
 
@@ -19,7 +19,7 @@ angular.module 'routingService', ['ui.router']
           pageTitle: pageTitle
           url: params.url
           views:
-            content: { templateUrl: "app/states/#{state}/#{state}.html" }
+            content: { templateUrl: "states/#{state}/#{state}.html" }
           controller: controller
           data: data
 

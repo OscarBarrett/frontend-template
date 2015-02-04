@@ -1,14 +1,14 @@
 'use strict'
 
 gulp    = require 'gulp'
-build   = require '../build.coffee'
+build   = require './build.coffee'
 config  = build.config
 $       = build.$
 
 del     = require 'del'
 
 ### Clean ###
-gulp.task 'clean', (cwd) ->
+gulp.task 'clean', ['clear_cache'], (cwd) ->
   # Delete the temporary and destination directories
   del [
     config.tmp

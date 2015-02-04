@@ -1,5 +1,14 @@
 .sass-cache
-.tmp
-bower_components
+.DS_Store
+*/.DS_Store
+
 node_modules
-public
+
+public/*
+!public/.git_keep
+
+vendor/*
+!vendor/.git_keep
+
+tmp/*
+!tmp/.git_keep

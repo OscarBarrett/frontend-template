@@ -8,15 +8,15 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
 
-    <!-- build:css({.tmp,src}) styles/vendor.css -->
-      <!-- <link rel="stylesheet" href="app/styles/vendor.css"> -->
+    <!-- build:css assets/stylesheets/vendor.css -->
+      <!-- <link rel="stylesheet" href="assets/stylesheets/vendor.css"> -->
 
       <!-- bower:css -->
       <!-- endbower -->
     <!-- endbuild -->
 
-    <!-- build:css({.tmp,src}) styles/application.css -->
-      <link rel="stylesheet" href="app/styles/common.css">
+    <!-- build:css assets/stylesheets/application.css -->
+      <link rel="stylesheet" href="app.css">
 
       <!-- inject:statecss -->
       <!-- endinject -->
@@ -34,17 +34,14 @@
 
     <div ga></div>
 
-    <!-- build:js scripts/vendor.js -->
+    <!-- build:js assets/javascripts/vendor.js -->
       <!-- bower:js -->
       <!-- endbower -->
     <!-- endbuild -->
 
-    <!-- build:js({src,.tmp}) scripts/common.js -->
-      <script src="app/scripts/common/routing_service.js"></script>
-    <!-- endbuild -->
-
-    <!-- build:js({src,.tmp}) scripts/application.js -->
-      <script src="app/app.js"></script>
+    <!-- build:js assets/javascripts/application.js -->
+      <script src="lib/routing_service.js"></script>
+      <script src="app.js"></script>
 
       <!-- inject:partials -->
       <!-- endinject -->
