@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'frontendTemplate'
+angular.module '$$replace:app_name$$'
   .controller 'HomeCtrl', ($scope) ->
     $scope.awesomeThings = [
       {

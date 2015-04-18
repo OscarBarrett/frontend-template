@@ -1,4 +1,4 @@
-angular.module 'frontendTemplate', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'routingService']
+angular.module '$$replace:app_name$$', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'routingService']
   .config (routingServiceProvider) ->
     routingServiceProvider.addState 'home',
       url: '/'
