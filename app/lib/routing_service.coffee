@@ -1,30 +1,39 @@
-angular.module 'routingService', ['ui.router']
+extend = (object, properties) ->
+  for key, val of properties
+    object[key] = val
+  object
+
+merge = (options, overrides) ->
+  extend (extend {}, options), overrides
+
+angular.module 'lib.templateRouter', ['ui.router']
   .config ($locationProvider, $urlRouterProvider) ->
-    $locationProvider.html5Mode !location.host.match(/(127.0.0.1|localhost|dev)/i)
+    $locationProvider.html5Mode !$$replace:devmode$$
     $urlRouterProvider.otherwise '/'
 
   .provider 'routingService', ($stateProvider) ->
     this.addState = (state, params) ->
-      if !state? || !params.url?
+      if !state?
         throw new Error
 
-      controller = params.controller || ''
-      data = params.data || {}
+      parent_state = state.split('.')[0]
+      title = parent_state.replace(/(_|-)/g, ' ')
+                          .replace(/(?:^|\s)\S/g, (a) -> a.toUpperCase())
 
-      pageTitle = params.pageTitle || state
-      pageTitle = pageTitle.charAt(0).toUpperCase() + pageTitle.slice(1)
+      defaultOptions = {
+        controller: ''
+        data:       {}
+        url:        '/' + state.replace(/(home|root|main)/,'')
+        pageTitle:  title
+        views: {
+          content: { templateUrl: "states/#{parent_state}/#{state}.html" }
+        }
+      }
 
-      $stateProvider
-        .state state,
-          pageTitle: pageTitle
-          url: params.url
-          views:
-            content: { templateUrl: "states/#{state}/#{state}.html" }
-          controller: controller
-          data: data
+      $stateProvider.state state, merge(defaultOptions, params)
 
     this.$get = ->
       (state, params) ->
-        addStage(state, params)
+        addState(state, params)
 
     return

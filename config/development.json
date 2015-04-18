@@ -1,3 +1,4 @@
 {
-  "apiurl": "http://api.dev"
+  "apiurl": "http://api.dev",
+  "devmode": "true"
 }

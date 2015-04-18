@@ -4,5 +4,6 @@
   "src": "app",
   "tmp": "tmp/compiled",
   "assetpath": "/assets",
-  "apiurl": "http://api.com"
+  "apiurl": "http://api.com",
+  "devmode": "false"
 }
