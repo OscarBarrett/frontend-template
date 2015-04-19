@@ -1,0 +1,11 @@
+<nav class="top-bar row" ng-controller="NavbarCtrl">
+
+  <ul class="right">
+    <li><a ui-sref="home" ui-sref-active="active">Home</a></li>
+    <li><a ui-sref="test" ui-sref-active="active">Test</a></li>
+  </ul>
+  <ul class="left">
+    <li id="currentDate">Current date: {{ date | date:'yyyy-MM-dd' }}</li>
+  </ul>
+
+</nav>

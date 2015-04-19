@@ -1,6 +1,11 @@
 {
   "app_name": "frontendTemplate",
   "dest": "public",
-  "src": "src",
-  "tmp": ".tmp"
+  "src": "app",
+  "tmp": "tmp/compiled",
+  "binary_types": "jpg,png,gif,ico,pdf",
+  "font_types": "eot,svg,ttf,woff,woff2,otf",
+  "assetpath": "/assets",
+  "apiurl": "http://api.com",
+  "devmode": "false"
 }

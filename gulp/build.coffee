@@ -1,31 +1,42 @@
 'use strict'
 
-gulp = require 'gulp'
+gulp        = require 'gulp'
+fs          = require 'fs'
+runSequence = require('run-sequence').use(gulp)
+lazypipe    = require('lazypipe')
 
 ### Exports ###
-exports.handleError = (err) ->
+handleError = exports.handleError = (err) ->
   console.error err.toString()
   @emit 'end'
   return
 
-exports.config = require '../config.json'
-
 # Load all gulp plugins. Accessed in nested tasks by running: $ = (require '../build.coffee').$
-exports.$ = require('gulp-load-plugins')(
+$ = exports.$ = require('gulp-load-plugins')(
   pattern: ['gulp-*']
 )
 
-require('require-dir')('./build') # Load build tasks
 
+bowerrc = exports.bowerrc = JSON.parse fs.readFileSync('.bowerrc', 'utf8')
+
+replaceConfigs = exports.replaceConfigs = lazypipe()
+  .pipe $.replace, /\$\$replace:(.+)\$\$/g, (match, configName, offset, string) ->
+    GLOBAL.config[configName]
+
+injectFiles = exports.injectFiles = lazypipe()
+  .pipe $.replace, /[#/\s]*\$\$inject_file:(.+)\$\$/g, (match, file, offset, string) ->
+    fs.readFileSync(file, 'utf8')
+
+require('require-dir')('./compile')
+require('require-dir')('./compress')
+require('require-dir')('./publish')
 
 ### Tasks ###
-gulp.task 'build', ['clean'], ->
-  gulp.start 'html', 'default_tasks'
+gulp.task 'build', ->
+  runSequence 'clean', 'compile.all', 'compress.all', 'publish.production'
 
-gulp.task 'build-staging', ['clean'], ->
-  gulp.start 'html_staging', 'default_tasks'
-
-gulp.task 'default_tasks', ->
-  gulp.start 'images', 'fonts', 'htaccess'
+gulp.task 'build-staging', ->
+  GLOBAL.setBuildEnv 'staging'
+  runSequence 'clean', 'compile.all', 'publish.staging'
 
 gulp.task 'init', ['clean', 'clear_cache']

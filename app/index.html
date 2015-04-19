@@ -1,0 +1,61 @@
+<!doctype html>
+<html class="no-js" ng-app="frontendTemplate">
+  <head>
+    <meta charset="utf-8">
+    <title ng-bind="currentState.pageTitle + ' | ' + siteName"></title>
+    <base href="/">
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <!-- build:css $$replace:assetpath$$/stylesheets/vendor.css -->
+      <!-- <link rel="stylesheet" href="$$replace:assetpath$$/stylesheets/vendor.css"> -->
+
+      <!-- bower:css -->
+      <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:css $$replace:assetpath$$/stylesheets/application.css -->
+      <link rel="stylesheet" href="app.css">
+
+      <!-- inject:partialcss -->
+      <!-- endinject -->
+    <!-- endbuild -->
+  </head>
+  <body ng-class="body_classes">
+
+    <div id="wrapper">
+
+      <h1>$$replace:apiurl$$</h1>
+
+      <div id="header-component" ng-include="'components/header/header.html'"></div>
+      <div id="navbar-component" ng-include="'components/navbar/navbar.html'"></div>
+
+      <div id="content">
+        <div id="state-content" ui-view="content"></div>
+      </div>
+
+      <div id="footer-component" ng-include="'components/footer/footer.html'"></div>
+
+    </div>
+
+    <div id="ga-component" ng-include="'components/ga/ga.html'"></div>
+
+    <!-- build:js $$replace:assetpath$$/javascripts/vendor.js -->
+      <!-- bower:js -->
+      <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js $$replace:assetpath$$/javascripts/application.js -->
+      <!-- inject:lib -->
+      <!-- endinject -->
+      <script src="app.js"></script>
+
+      <!-- inject:partialjs -->
+      <!-- endinject -->
+      <!-- inject:partialhtml -->
+      <!-- endinject -->
+    <!-- endbuild -->
+
+  </body>
+</html>
