@@ -16,6 +16,8 @@ browserSyncInit = (baseDir, files, browser) ->
       routes:
         '/vendor/bower_components': 'vendor/bower_components'
     browser: browser
+    timestamps: false
+    reloadDelay: 2000
   )
 
 gulp.task 'serve', ->

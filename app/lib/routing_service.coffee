@@ -1,10 +1,4 @@
-extend = (object, properties) ->
-  for key, val of properties
-    object[key] = val
-  object
-
-merge = (options, overrides) ->
-  extend (extend {}, options), overrides
+#$$inject_file:lib/utils.coffee$$
 
 angular.module 'lib.templateRouter', ['ui.router']
   .config ($locationProvider, $urlRouterProvider) ->

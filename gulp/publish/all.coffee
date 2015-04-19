@@ -21,7 +21,7 @@ gulp.task 'publish.files', ->
 
 gulp.task 'publish.bowerfonts', ->
   gulp.src mainBowerFiles()
-    .pipe $.filter('**/*.{eot,svg,ttf,woff}')
+    .pipe $.filter('**/*.{GLOBAL.config.font_types}')
     .pipe $.flatten()                                # Move all fonts into a single dir
     .pipe gulp.dest("#{GLOBAL.config.dest}/assets/fonts")   # Save to final destination
     .pipe $.size()

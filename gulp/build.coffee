@@ -20,8 +20,12 @@ $ = exports.$ = require('gulp-load-plugins')(
 bowerrc = exports.bowerrc = JSON.parse fs.readFileSync('.bowerrc', 'utf8')
 
 replaceConfigs = exports.replaceConfigs = lazypipe()
-  .pipe $.replace, /\$\$replace:(.+)\$\$/g, (match,configName,offset,string) ->
+  .pipe $.replace, /\$\$replace:(.+)\$\$/g, (match, configName, offset, string) ->
     GLOBAL.config[configName]
+
+injectFiles = exports.injectFiles = lazypipe()
+  .pipe $.replace, /[#/\s]*\$\$inject_file:(.+)\$\$/g, (match, file, offset, string) ->
+    fs.readFileSync(file, 'utf8')
 
 require('require-dir')('./compile')
 require('require-dir')('./compress')
